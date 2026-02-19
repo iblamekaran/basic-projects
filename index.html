@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgb(128, 177, 221);
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .error-message {
+            color: rgb(5, 5, 5);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #080808;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #457fa0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Create Account</h2>
+
+    <form id="registerForm">
+
+        <label for="userName">Name</label>
+        <input type="text" id="userName">
+        <div class="error-message" id="nameError"></div>
+
+        <label for="userEmail">Email</label>
+        <input type="text" id="userEmail">
+        <div class="error-message" id="emailError"></div>
+
+        <label for="userPassword">Password</label>
+        <input type="password" id="userPassword">
+        <div class="error-message" id="passwordError"></div>
+
+        <label for="confirmUserPassword">Confirm Password</label>
+        <input type="password" id="confirmUserPassword">
+        <div class="error-message" id="confirmPasswordError"></div>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", function(event) {
+
+    // Stop form submission until validation is complete
+    event.preventDefault();
+
+    // Get input values
+    let name = document.getElementById("userName").value.trim();
+    let email = document.getElementById("userEmail").value.trim();
+    let password = document.getElementById("userPassword").value;
+    let confirmPassword = document.getElementById("confirmUserPassword").value;
+
+    // Assume form is valid initially
+    let formIsValid = true;
+
+    // Clear old error messages
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+    document.getElementById("confirmPasswordError").innerText = "";
+
+    // 1️⃣ Name Validation
+    if (name === "") {
+        document.getElementById("nameError").innerText = "Please enter your name.";
+        formIsValid = false;
+    }
+
+    // 2️⃣ Email Validation (simple regex)
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if (!email.match(emailPattern)) {
+        document.getElementById("emailError").innerText = "Please enter a valid email address.";
+        formIsValid = false;
+    }
+
+    // 3️⃣ Password Validation
+    if (password.length < 8) {
+        document.getElementById("passwordError").innerText = "Password must be at least 8 characters long.";
+        formIsValid = false;
+    }
+
+    // 4️⃣ Confirm Password Validation
+    if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").innerText = "Passwords do not match.";
+        formIsValid = false;
+    }
+
+    // If everything is valid
+    if (formIsValid) {
+        alert("Registration Successful 🎉");
+        document.getElementById("registerForm").reset();
+    }
+
+});
+</script>
+
+</body>
+</html>
+
